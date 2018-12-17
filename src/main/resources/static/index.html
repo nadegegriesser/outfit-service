@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+$(document).ready(function(){
+    $("#countries").change(function() {
+        $.getJSON("countries/" + $("#countries option:selected").val() + "/cities", function(cities){
+            $("#cities option").remove();
+            var $dropdown = $("#cities");
+            $.each(cities, function() {
+                $dropdown.append($("<option />").val(this['id']).text(this['name']));
+            });
+            $dropdown.val($("#cities option:first").val()).change();
+        });
+    });
+    $.getJSON("countries", function(countries){
+        var $dropdown = $("#countries");
+        $.each(countries, function() {
+            $dropdown.append($("<option />").val(this['country-code']).text(this['country-code']));
+        });
+        $dropdown.val($("#countries option:first").val()).change();
+    });
+    $("form").submit(function(event) {
+        $.getJSON("/cities/" + $("#cities option:selected").val() + "/recommendation", function(recommendation){
+            $("#temperature").text(recommendation['temperature']);
+            $("#outfit-level").text(recommendation['outfit-level']);
+        });
+        event.preventDefault();
+    });
+});
+
+
+
+    </script>
+</head>
+<body>
+
+<h1>Outfit Service</h1>
+
+<h2>Your location</h2>
+<div>
+<form>
+    <div>
+        <label for="countries">Country</label>
+        <select id="countries"></select></div>
+    <div>
+        <label for="cities">City</label>
+        <select id="cities"></select></div>
+    <div>
+        <input type="submit">
+    </div>
+</form>
+</div>
+
+<h2>Our recommendation</h2>
+<div>
+<div>Actual temperature: <span id="temperature"></span>&#xB0;C</div>
+<div>Recommended outfit level: <span id="outfit-level"></span></div>
+</div>
+
+</body>
+</html>
