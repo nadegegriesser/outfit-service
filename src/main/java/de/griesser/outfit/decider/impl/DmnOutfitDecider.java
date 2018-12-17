@@ -26,7 +26,7 @@ public class DmnOutfitDecider implements OutfitDecider {
     private final DmnEngine dmnEngine;
     private final DmnDecision decision;
 
-    public DmnOutfitDecider(DeciderProperties properties) throws ConfigurationException {
+    DmnOutfitDecider(DeciderProperties properties) throws ConfigurationException {
         this.dmnEngine = DmnEngineConfiguration
                 .createDefaultDmnEngineConfiguration()
                 .buildEngine();

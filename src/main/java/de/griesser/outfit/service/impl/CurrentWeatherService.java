@@ -15,7 +15,7 @@ import java.net.URI;
 @Service
 public class CurrentWeatherService implements WeatherService {
 
-    protected static final String CACHE_NAME = "current-weather";
+    static final String CACHE_NAME = "current-weather";
     private static final String CURRENT_WEATHER_BY_CITY_ID =
             "/weather?id={id}&units={units}&APPID={key}";
 
@@ -24,7 +24,7 @@ public class CurrentWeatherService implements WeatherService {
     private final String apiKey;
     private final String units;
 
-    public CurrentWeatherService(RestTemplate restTemplate, ServiceProperties serviceProperties) {
+    CurrentWeatherService(RestTemplate restTemplate, ServiceProperties serviceProperties) {
         this.restTemplate = restTemplate;
         this.cityUriTemplate = serviceProperties.getEndpoint() + CURRENT_WEATHER_BY_CITY_ID;
         this.apiKey = serviceProperties.getAppid();
