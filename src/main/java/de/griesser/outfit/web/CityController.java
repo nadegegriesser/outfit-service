@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -21,15 +22,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RequestMapping("/countries/{country-code}/cities")
 public class CityController {
 
-    private final Map<String, List<City>> citiesByCountry;
+    private final Map<String, SortedSet<City>> citiesByCountry;
 
     public CityController(CityService cityService) {
         this.citiesByCountry =
                 cityService.getCities().stream()
-                        .filter(city -> !StringUtils.isEmpty(city.getCountry()))
                         .collect(Collectors.toMap(city -> city.getCountry().toLowerCase(),
                                 city -> {
-                                    List<City> cities = new ArrayList<>();
+                                    SortedSet<City> cities = new TreeSet<>(Comparator.comparing(City::getName));
                                     cities.add(new City(city.getId(), city.getName()));
                                     return cities;
                                 },
@@ -41,8 +41,8 @@ public class CityController {
     }
 
     @RequestMapping(method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<City> getCitiesForCountry(@PathVariable("country-code") String countryCode) {
-        List<City> cities = citiesByCountry.get(countryCode.toLowerCase());
+    public SortedSet<City> getCitiesForCountry(@PathVariable("country-code") String countryCode) {
+        SortedSet<City> cities = citiesByCountry.get(countryCode.toLowerCase());
         if (cities == null) {
             throw new ResponseStatusException(NOT_FOUND, "Country Not Found");
         } else {

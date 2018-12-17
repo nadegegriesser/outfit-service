@@ -7,6 +7,6 @@ import lombok.Data;
 public class Country {
 
     @JsonProperty("country-code")
-    private String countryCode;
+    private final String countryCode;
 
 }
