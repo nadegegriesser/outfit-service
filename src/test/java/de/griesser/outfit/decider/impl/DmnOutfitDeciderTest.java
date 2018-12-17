@@ -5,7 +5,6 @@ import de.griesser.outfit.decider.api.Decision;
 import de.griesser.outfit.decider.api.OutfitDecider;
 import de.griesser.outfit.decider.api.Variables;
 import de.griesser.outfit.decider.config.DeciderProperties;
-import de.griesser.outfit.decider.impl.DmnOutfitDecider;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +33,13 @@ o Level 5: x <= 5 °C
         return Arrays.stream(new Object[][]{
                 {26.1d, 1}, {26d, 2}, {21.1d, 2}, {21d, 3}, {15.1d, 3}, {15d, 4}, {5.1d, 4}, {5d, 5}
         })
-                .map(elem -> new Object[]{new Variables((double) elem[0]), new Decision((int) elem[1])})
+                .map(elem -> {
+                    Variables variables = new Variables();
+                    variables.setTemperature((double) elem[0]);
+                    Decision decision = new Decision();
+                    decision.setOutfitLevel((int) elem[1]);
+                    return new Object[]{variables, decision};
+                })
                 .collect(Collectors.toList());
     }
 
@@ -48,7 +53,7 @@ o Level 5: x <= 5 °C
     }
 
     @BeforeClass
-    public static void setUp() throws IOException {
+    public static void setUp() throws ConfigurationException {
         DeciderProperties props = new DeciderProperties();
         props.setDecisionFilename("decision.dmn11.xml");
         outfitDecider = new DmnOutfitDecider(props);
@@ -58,7 +63,6 @@ o Level 5: x <= 5 °C
     public void test() throws ConfigurationException {
         assertEquals(expectedDecision, outfitDecider.getDecision(variables));
     }
-
 
 }
 

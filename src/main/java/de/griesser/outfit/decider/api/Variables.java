@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class Variables {
 
-    private final double temperature;
+    // field names must match input from dmn decision table
+    private double temperature;
 
 }

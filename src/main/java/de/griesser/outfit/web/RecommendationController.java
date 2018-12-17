@@ -34,14 +34,23 @@ public class RecommendationController {
     public Recommendation getRecommendationForCity(@PathVariable("city-id") long cityId) {
         try {
             Weather weather = weatherService.getWeatherByCityId(cityId);
-            double temperature = weather.getMain().getTemp();
-            Decision decision = outfitDecider.getDecision(new Variables(temperature));
-            return new Recommendation(temperature, decision.getOutfitLevel());
+            Decision decision = outfitDecider.getDecision(createVariables(weather));
+            return createRecommendation(weather, decision);
         } catch (CityNotFoundException ex) {
             throw new ResponseStatusException(NOT_FOUND, "City Not Found");
         } catch (ConfigurationException e) {
             throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Outfit Decider configuration is faulty");
         }
+    }
+
+    private Variables createVariables(Weather weather) {
+        Variables variables = new Variables();
+        variables.setTemperature(weather.getMain().getTemp());
+        return variables;
+    }
+
+    private Recommendation createRecommendation(Weather weather, Decision decision) {
+        return new Recommendation(weather.getMain().getTemp(), decision.getOutfitLevel());
     }
 
 }

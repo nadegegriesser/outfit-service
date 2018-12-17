@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class Decision {
 
-    private final int outfitLevel;
+    // field names must match output from dmn decision table
+    private int outfitLevel;
 
 }
