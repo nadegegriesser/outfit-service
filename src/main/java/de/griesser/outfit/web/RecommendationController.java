@@ -1,5 +1,6 @@
 package de.griesser.outfit.web;
 
+import de.griesser.outfit.decider.api.ConfigurationException;
 import de.griesser.outfit.decider.api.Decision;
 import de.griesser.outfit.decider.api.OutfitDecider;
 import de.griesser.outfit.decider.api.Variables;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
@@ -37,6 +39,8 @@ public class RecommendationController {
             return new Recommendation(temperature, decision.getOutfitLevel());
         } catch (CityNotFoundException ex) {
             throw new ResponseStatusException(NOT_FOUND, "City Not Found");
+        } catch (ConfigurationException e) {
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Outfit Decider configuration is faulty");
         }
     }
 

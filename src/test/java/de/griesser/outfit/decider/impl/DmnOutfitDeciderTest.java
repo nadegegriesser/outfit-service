@@ -1,5 +1,6 @@
 package de.griesser.outfit.decider.impl;
 
+import de.griesser.outfit.decider.api.ConfigurationException;
 import de.griesser.outfit.decider.api.Decision;
 import de.griesser.outfit.decider.api.OutfitDecider;
 import de.griesser.outfit.decider.api.Variables;
@@ -30,9 +31,9 @@ o Level 5: x <= 5 °C
      */
     @Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
+        return Arrays.stream(new Object[][]{
                 {26.1d, 1}, {26d, 2}, {21.1d, 2}, {21d, 3}, {15.1d, 3}, {15d, 4}, {5.1d, 4}, {5d, 5}
-        }).stream()
+        })
                 .map(elem -> new Object[]{new Variables((double) elem[0]), new Decision((int) elem[1])})
                 .collect(Collectors.toList());
     }
@@ -54,7 +55,7 @@ o Level 5: x <= 5 °C
     }
 
     @Test
-    public void test() {
+    public void test() throws ConfigurationException {
         assertEquals(expectedDecision, outfitDecider.getDecision(variables));
     }
 

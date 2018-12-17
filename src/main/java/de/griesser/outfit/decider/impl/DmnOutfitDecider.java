@@ -1,5 +1,6 @@
 package de.griesser.outfit.decider.impl;
 
+import de.griesser.outfit.decider.api.ConfigurationException;
 import de.griesser.outfit.decider.config.DeciderProperties;
 import de.griesser.outfit.decider.api.Decision;
 import de.griesser.outfit.decider.api.OutfitDecider;
@@ -8,6 +9,7 @@ import org.camunda.bpm.dmn.engine.DmnDecision;
 import org.camunda.bpm.dmn.engine.DmnDecisionTableResult;
 import org.camunda.bpm.dmn.engine.DmnEngine;
 import org.camunda.bpm.dmn.engine.DmnEngineConfiguration;
+import org.camunda.bpm.dmn.engine.impl.hitpolicy.DmnHitPolicyException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +36,14 @@ public class DmnOutfitDecider implements OutfitDecider {
         }
     }
 
-    public Decision getDecision(Variables variables) {
-        DmnDecisionTableResult result = dmnEngine.evaluateDecisionTable(decision,
-                Collections.singletonMap(TEMPERATURE_INPUT, variables.getTemperature()));
-        return new Decision(result.getSingleResult().getEntry(OUTFIT_LEVEL_OUTPUT));
+    public Decision getDecision(Variables variables) throws ConfigurationException {
+        try {
+            DmnDecisionTableResult result = dmnEngine.evaluateDecisionTable(decision,
+                    Collections.singletonMap(TEMPERATURE_INPUT, variables.getTemperature()));
+            return new Decision(result.getSingleResult().getEntry(OUTFIT_LEVEL_OUTPUT));
+        } catch (DmnHitPolicyException ex) {
+            throw new ConfigurationException();
+        }
     }
 
 }
