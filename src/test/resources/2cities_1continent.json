@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1859472,
+    "name": "Kimiidera",
+    "country": "JP",
+    "coord": {
+      "lon": 135.199997,
+      "lat": 34.183331
+    }
+  },
+  {
+    "id": 6255149,
+    "name": "North America",
+    "country": "",
+    "coord": {
+      "lon": -100.546883,
+      "lat": 46.073231
+    }
+  },
+  {
+    "id": 576721,
+    "name": "Besedy",
+    "country": "RU",
+    "coord": {
+      "lon": 37.790001,
+      "lat": 55.610001
+    }
+  }
+]

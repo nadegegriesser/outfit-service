@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="definitions" name="definitions" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="decision" name="Outfit">
+    <decisionTable id="decisionTable" hitPolicy="FIRST">
+      <input id="input-1" label="Temperature in °C">
+        <inputExpression id="inputExpression-1" typeRef="double">
+          <text>temperature</text>
+        </inputExpression>
+      </input>
+      <output id="output-1" label="Outfit Level" name="outfitLevel" typeRef="integer" />
+      <rule id="row-1">
+        <description>sehr leichte Kleidung</description>
+        <inputEntry id="inputEntry-1">
+          <text>&gt;=26</text>
+        </inputEntry>
+        <outputEntry id="outputEntry-1">
+          <text>1</text>
+        </outputEntry>
+      </rule>
+      <rule id="row-2">
+        <inputEntry id="inputEntry-2">
+          <text>]21..26]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry-2">
+          <text>2</text>
+        </outputEntry>
+      </rule>
+      <rule id="row-3">
+        <inputEntry id="inputEntry-3">
+          <text>]15..21]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry-3">
+          <text>3</text>
+        </outputEntry>
+      </rule>
+      <rule id="row-4">
+        <inputEntry id="inputEntry-4">
+          <text>]5..15]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry-4m">
+          <text>4</text>
+        </outputEntry>
+      </rule>
+      <rule id="row-5">
+        <description>sehr warme Kleidung</description>
+        <inputEntry id="inputEntry-5">
+          <text>&lt;=5</text>
+        </inputEntry>
+        <outputEntry id="outputEntry-5">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

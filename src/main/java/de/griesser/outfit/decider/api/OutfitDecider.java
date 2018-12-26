@@ -2,6 +2,6 @@ package de.griesser.outfit.decider.api;
 
 public interface OutfitDecider {
 
-    Decision getDecision(Variables variables) throws ConfigurationException;
+    Decision getDecision(Variables variables);
 
 }

@@ -25,39 +25,66 @@ $(document).ready(function(){
         $.getJSON("/cities/" + $("#cities option:selected").val() + "/recommendation", function(recommendation){
             $("#temperature").text(recommendation['temperature']);
             $("#outfit-level").text(recommendation['outfit-level']);
+        }).fail(function(jqxhr, textStatus, error) {
+            alert(textStatus);
         });
         event.preventDefault();
     });
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function showPosition(position) {
+                $("#latitude").text(position.coords.latitude);
+                $("#longitude").text(position.coords.longitude);
+                $.getJSON("/latitudes/" + position.coords.latitude + "/longitudes/" + position.coords.longitude + "/recommendation", function(recommendation){
+                    $("#temperature").text(recommendation['temperature']);
+                    $("#outfit-level").text(recommendation['outfit-level']);
+                }).fail(function(jqxhr, textStatus, error) {
+                    alert(textStatus);
+                });
+            },
+            function (error) {
+                if (error.code == error.PERMISSION_DENIED) {
+                    $("#geolocation").hide();
+                    $("#no-geolocation").show();
+                }
+            }
+        );
+    } else {
+        $("#geolocation").hide();
+        $("#no-geolocation").show();
+    }
 });
-
-
 
     </script>
 </head>
 <body>
 
+
 <h1>Outfit Service</h1>
 
 <h2>Your location</h2>
-<div>
-<form>
-    <div>
-        <label for="countries">Country</label>
-        <select id="countries"></select></div>
-    <div>
-        <label for="cities">City</label>
-        <select id="cities"></select></div>
-    <div>
-        <input type="submit">
-    </div>
-</form>
-</div>
 
+<div id="geolocation">
+    <div>Latitude: <span id="latitude"></span></div>
+    <div>Longitude: <span id="longitude"></span></div>
+</div>
+<div id="no-geolocation" style="display: none">
+    <form>
+        <div>
+            <label for="countries">Country</label>
+            <select id="countries"></select></div>
+        <div>
+            <label for="cities">City</label>
+            <select id="cities"></select></div>
+        <div>
+            <input type="submit">
+        </div>
+    </form>
+</div>
 <h2>Our recommendation</h2>
 <div>
-<div>Actual temperature: <span id="temperature"></span>&#xB0;C</div>
-<div>Recommended outfit level: <span id="outfit-level"></span></div>
+    <div>Actual temperature: <span id="temperature"></span>&#xB0;C</div>
+    <div>Recommended outfit level: <span id="outfit-level"></span></div>
 </div>
-
 </body>
 </html>

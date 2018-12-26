@@ -1,6 +1,6 @@
 # Outfit Service
 
-This service provides outfit recommendation depending on the current temperature at a given location.
+This service provides outfit recommendation depending on the current temperature at a given location (either by city id or by coordinates).
 
 
 ## Weather data
@@ -14,7 +14,7 @@ A DMN decision table is used to determine which outfit level corresponds to the 
 
 ![Decision]
 
-You can find the corresponding DMN XML file [decision.dmn11.xml] in the
+You can find the corresponding DMN XML file [decision.dmn] in the
 resources. To modify it you can use the [Camunda Modeler].
 
 
@@ -33,19 +33,33 @@ than call it like any other jar file:
 java -jar target/outfit-service-0.0.1-SNAPSHOT.jar 
 ```
 
+## Frontend
+
+A minimal [Demo] frontend is available to demonstrate the use of the 2 endpoints.
+
+If the browser supports geolocation and the user accepts to share its coordinates, the endpoint using coordinates is called.
+![Coordinates]
+
+Otherwise the user can select a country, a city in the previously selected country and query the endpoint using the city id. 
+![City]
+
 ## Tests
 
 ### Unit tests
 
-The decision table is tested with JUnit using the Parametrized Runner to check many cases.
+The decision logic is tested with JUnit using the Parametrized runner to check many cases. 
+Error cases are tested with the standard JUnit runner using different Dmn files.
 
-The Weather API client is tested with JUnit using the MockitoJUnitRunner to mock the RestTemplate.
+The Weather API client is tested with JUnit using MockitoJUnitRunner to mock the RestTemplate.
+Caching for the Weather API ist tested with JUnit using SpringJUnit4ClassRunner in combination with Mockito.
 
-The RestControllers are tested with JUnit using the MockitoJUnitRunner to mock business logic and services.
+The RestControllers are tested with JUnit using MockitoJUnitRunner to mock business logic and services.
+
 
 ### Integration tests
 
-Caching for the Weather API ist tested with JUnit using the SpringJUnit4ClassRunner in combination with Mockito.
+The RestControllers are tested with JUnit using SpringRunner to start the web application, check request validation and test the responses.
+
 
 
 ## Endpoint documentation
@@ -64,17 +78,30 @@ mvn site
 
 Unit test results can be viewed as a [Surefire report].
 
+### Integration test report
+
+Integration test results can be viewed as a [Failsafe report].
+
 ### Code coverage report
 
 Code coverage for tests can be viewed as a [JaCoCo report].
 
 
+## Possible improvements
+
+- Download and extract the json file containing the cities (if there is a newer version available) instead of saving it to the resources folder.
+- Define more complex decision logic, maybe based on humidity or pressure. 
+
 
 [OpenWeatherMap]: https://www.openweathermap.org/api
 [Camunda Modeler]: https://camunda.org/dmn/tool/
 [Decision]: src/main/resources/decision.png
-[decision.dmn11.xml]: src/main/resources/decision.dmn11.xml
+[decision.dmn]: src/main/resources/decision.dmn
 [SpotBugs report]: target/site/spotbugs.html
 [JaCoCo report]: target/site/jacoco/index.html
 [Surefire report]: target/site/surefire-report.html
+[Failsafe report]: target/site/failsafe-report.html
+[Demo]: http://localhost:8080
+[Coordinates]: src/main/resources/coordinates.png
+[City]: src/main/resources/city_id.png
 [Swagger UI]: http://localhost:8080/swagger-ui.html

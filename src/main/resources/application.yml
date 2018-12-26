@@ -1,12 +1,15 @@
-service:
+weatherservice:
   endpoint: http://api.openweathermap.org/data/2.5
   appid: 9cf05c83c59a7c910ac80ed4c5a31a7d
   units: metric
   city-filename: city.list.json
 decider:
-  decision-filename: decision.dmn11.xml
+  decision-key: decision
+  decision-filename: decision.dmn
 spring:
   cache:
-    cache-names: current-weather
+    cache-names: current-weather-city,current-weather-coordinates
     caffeine:
       spec: maximumSize=500,expireAfterAccess=600s
+  mvc:
+    locale: en_US

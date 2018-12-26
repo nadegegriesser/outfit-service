@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class DeciderProperties {
 
+    private String decisionKey;
     private String decisionFilename;
 
 }
