@@ -48,7 +48,7 @@ Otherwise the user can select a country, a city in the previously selected count
 ### Unit tests
 
 The decision logic is tested with JUnit using the Parametrized runner to check many cases. 
-Error cases are tested with the standard JUnit runner using different Dmn files.
+Error cases are tested with the standard JUnit runner using different DMN files.
 
 The Weather API client is tested with JUnit using MockitoJUnitRunner to mock the RestTemplate.
 Caching for the Weather API ist tested with JUnit using SpringJUnit4ClassRunner in combination with Mockito.
@@ -89,7 +89,8 @@ Code coverage for tests can be viewed as a [JaCoCo report].
 
 ## Possible improvements
 
-- Download and extract the json file containing the cities (if there is a newer version available) instead of saving it to the resources folder.
+- Download and extract the json file containing the cities when needed instead of saving it to the resources folder (determine if there is a newer version available using the ETag header).
+- Write a maven plugin to generate the Outfit Decider contract (Decision and Variables classes) from the DMN file.
 - Define more complex decision logic, maybe based on humidity or pressure. 
 
 
