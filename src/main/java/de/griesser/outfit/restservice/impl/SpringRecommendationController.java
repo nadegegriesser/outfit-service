@@ -41,7 +41,7 @@ public class SpringRecommendationController implements RecommendationController 
         }
         try {
             Weather weather = weatherService.getWeatherByCityId(cityId);
-            Decision decision = outfitDecider.getDecision(new Variables(weather.getMain().getTemp()));
+            Decision decision = outfitDecider.getDecision(new Variables(weather.getMain().getTemp().doubleValue()));
             return new Recommendation(weather.getMain().getTemp(), decision.getOutfitLevel());
         } catch (ClientError ex) {
             throw new ResponseStatusException(INTERNAL_SERVER_ERROR, ERROR_INTERNAL_SERVER_ERROR);
@@ -56,7 +56,7 @@ public class SpringRecommendationController implements RecommendationController 
             @PathVariable BigDecimal longitude) {
         try {
             Weather weather = weatherService.getWeatherByCoordinates(new Coord(latitude, longitude));
-            Decision decision = outfitDecider.getDecision(new Variables(weather.getMain().getTemp()));
+            Decision decision = outfitDecider.getDecision(new Variables(weather.getMain().getTemp().doubleValue()));
             return new Recommendation(weather.getMain().getTemp(), decision.getOutfitLevel());
         } catch (ClientError ex) {
             throw new ResponseStatusException(INTERNAL_SERVER_ERROR, ERROR_INTERNAL_SERVER_ERROR);

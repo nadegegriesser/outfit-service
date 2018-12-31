@@ -11,7 +11,6 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -32,7 +31,7 @@ o Level 5: x <= 5 °C
     public static Collection<Object[]> data() {
         return Arrays.stream(new Object[][]{
                 {26.1d, 1}, {26d, 2}, {21.1d, 2}, {21d, 3}, {15.1d, 3}, {15d, 4}, {5.1d, 4}, {5d, 5}
-        }).map(elem -> new Object[]{new Variables(new BigDecimal((double) elem[0])), new Decision((int) elem[1])})
+        }).map(elem -> new Object[]{new Variables((double) elem[0]), new Decision((int) elem[1])})
                 .collect(Collectors.toList());
     }
 

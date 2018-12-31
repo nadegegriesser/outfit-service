@@ -8,7 +8,6 @@ import org.camunda.bpm.dmn.engine.impl.transform.DmnTransformException;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
 public class DmnOutfitDeciderErrorTest {
 
@@ -44,7 +43,7 @@ o Level 5: x <= 5 °C
         props.setDecisionKey("decision");
         OutfitDecider outfitDecider = new DmnOutfitDecider(props);
 
-        outfitDecider.getDecision(new Variables(new BigDecimal(26)));
+        outfitDecider.getDecision(new Variables(26d));
     }
 
 }

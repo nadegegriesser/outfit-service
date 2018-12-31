@@ -31,7 +31,7 @@ public class SpringRecommendationControllerTest {
     private static final Coord COORD = new Coord(new BigDecimal(LATITUDE), new BigDecimal(LONGITUDE));
     private static final BigDecimal DUMMY_TEMP = new BigDecimal(TEMPERATURE);
     private static final Weather DUMMY_WEATHER = new Weather(new Main(DUMMY_TEMP));
-    private static final Variables DUMMY_VARIABLES = new Variables(DUMMY_TEMP);
+    private static final Variables DUMMY_VARIABLES = new Variables(DUMMY_TEMP.doubleValue());
     private static final int DUMMY_OUTFIT_LEVEL = Integer.parseInt(OUTFIT_LEVEL);
     private static final Decision DUMMY_DECISION = new Decision(DUMMY_OUTFIT_LEVEL);
     private static final Recommendation EXPECTED_RECOMMENDATION = new Recommendation(DUMMY_TEMP, DUMMY_OUTFIT_LEVEL);

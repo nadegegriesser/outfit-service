@@ -38,8 +38,8 @@ public class DmnOutfitDecider implements OutfitDecider {
         if (decisionTable.getHitPolicyHandler().getHitPolicyEntry().getHitPolicy() != UNIQUE) {
             throw new RuntimeException("Hit policy must be unique");
         }
-        this.variablesToMapMapper = new VariablesToMapMapper(decisionTable.getInputs());
-        this.resultToDecisionMapper = new DmnDecisionRuleResultToDecisionMapper(decisionTable.getOutputs());
+        this.variablesToMapMapper = new VariablesToMapMapper();
+        this.resultToDecisionMapper = new DmnDecisionRuleResultToDecisionMapper();
     }
 
     public Decision getDecision(Variables variables) {
