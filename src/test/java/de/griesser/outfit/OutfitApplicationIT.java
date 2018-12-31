@@ -1,8 +1,8 @@
 package de.griesser.outfit;
 
-import de.griesser.outfit.web.api.City;
-import de.griesser.outfit.web.api.Country;
-import de.griesser.outfit.web.api.Recommendation;
+import de.griesser.outfit.restservice.api.City;
+import de.griesser.outfit.restservice.api.Country;
+import de.griesser.outfit.restservice.api.Recommendation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static de.griesser.outfit.web.api.Examples.*;
-import static de.griesser.outfit.web.api.Recommendation.OUTFIT_LEVEL_MAX;
-import static de.griesser.outfit.web.api.Recommendation.OUTFIT_LEVEL_MIN;
-import static de.griesser.outfit.web.api.RecommendationController.ERROR_CITY_NOT_FOUND;
-import static de.griesser.outfit.web.impl.SpringCityController.ERROR_COUNTRY_NOT_FOUND;
+import static de.griesser.outfit.restservice.api.Examples.*;
+import static de.griesser.outfit.restservice.api.Recommendation.OUTFIT_LEVEL_MAX;
+import static de.griesser.outfit.restservice.api.Recommendation.OUTFIT_LEVEL_MIN;
+import static de.griesser.outfit.restservice.api.RecommendationController.ERROR_CITY_NOT_FOUND;
+import static de.griesser.outfit.restservice.impl.SpringCityController.ERROR_COUNTRY_NOT_FOUND;
 import static org.junit.Assert.*;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.*;
