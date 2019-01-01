@@ -20,6 +20,9 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class DmnOutfitDeciderTest {
 
+    private static final String DECISION_FILENAME = "decision.dmn";
+    private static final String DECISION_KEY = "decision";
+
     /*
 o Level 1: x > 26 °C
 o Level 2: 21 < x <= 26 °C
@@ -47,8 +50,8 @@ o Level 5: x <= 5 °C
     @BeforeClass
     public static void setUp() throws IOException {
         DeciderProperties props = new DeciderProperties();
-        props.setDecisionFilename("decision.dmn");
-        props.setDecisionKey("decision");
+        props.setDecisionFilename(DECISION_FILENAME);
+        props.setDecisionKey(DECISION_KEY);
         outfitDecider = new DmnOutfitDecider(props);
     }
 
