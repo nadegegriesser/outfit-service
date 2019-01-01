@@ -19,7 +19,6 @@
         <camunda.version>7.10.0</camunda.version>
         <juel.version>2.2.7</juel.version>
         <swagger.version>2.9.2</swagger.version>
-        <spotbugs.version>3.1.9</spotbugs.version>
     </properties>
 
     <scm>
@@ -114,6 +113,11 @@
                         </excludes>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>3.1.9</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -124,7 +128,6 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs.version}</version>
                 <executions>
                     <execution>
                         <id>spotbugs-check</id>
@@ -184,7 +187,6 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
