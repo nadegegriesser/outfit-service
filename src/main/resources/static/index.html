@@ -4,32 +4,40 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
 $(document).ready(function(){
-    $("#countries").change(function() {
-        $.getJSON("countries/" + $("#countries option:selected").val() + "/cities", function(cities){
-            $("#cities option").remove();
-            var $dropdown = $("#cities");
-            $.each(cities, function() {
-                $dropdown.append($("<option />").val(this['id']).text(this['name']));
+    function handleNoGeoLocation() {
+        $("#countries").change(function() {
+            $.getJSON("countries/" + $("#countries option:selected").val() + "/cities", function(cities){
+                $("#cities option").remove();
+                var $dropdown = $("#cities");
+                $.each(cities, function() {
+                    $dropdown.append($("<option />").val(this['id']).text(this['name']));
+                });
+                $dropdown.val($("#cities option:first").val()).change();
+            }).fail(function(jqxhr, textStatus, error) {
+                alert(textStatus + ':' + error);
             });
-            $dropdown.val($("#cities option:first").val()).change();
         });
-    });
-    $.getJSON("countries", function(countries){
-        var $dropdown = $("#countries");
-        $.each(countries, function() {
-            $dropdown.append($("<option />").val(this['country-code']).text(this['country-code']));
-        });
-        $dropdown.val($("#countries option:first").val()).change();
-    });
-    $("form").submit(function(event) {
-        $.getJSON("/cities/" + $("#cities option:selected").val() + "/recommendation", function(recommendation){
-            $("#temperature").text(recommendation['temperature']);
-            $("#outfit-level").text(recommendation['outfit-level']);
+        $.getJSON("countries", function(countries){
+            var $dropdown = $("#countries");
+            $.each(countries, function() {
+                $dropdown.append($("<option />").val(this['country-code']).text(this['country-code']));
+            });
+            $dropdown.val($("#countries option:first").val()).change();
         }).fail(function(jqxhr, textStatus, error) {
-            alert(textStatus);
+            alert(textStatus + ':' + error);
         });
-        event.preventDefault();
-    });
+        $("form").submit(function(event) {
+            $.getJSON("/cities/" + $("#cities option:selected").val() + "/recommendation", function(recommendation){
+                $("#temperature").text(recommendation['temperature']);
+                $("#outfit-level").text(recommendation['outfit-level']);
+            }).fail(function(jqxhr, textStatus, error) {
+                alert(textStatus + ':' + error);
+            });
+            event.preventDefault();
+        });
+        $("#geolocation").hide();
+        $("#no-geolocation").show();
+    };
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function showPosition(position) {
@@ -39,19 +47,17 @@ $(document).ready(function(){
                     $("#temperature").text(recommendation['temperature']);
                     $("#outfit-level").text(recommendation['outfit-level']);
                 }).fail(function(jqxhr, textStatus, error) {
-                    alert(textStatus);
+                    alert(textStatus + ':' + error);
                 });
             },
             function (error) {
                 if (error.code == error.PERMISSION_DENIED) {
-                    $("#geolocation").hide();
-                    $("#no-geolocation").show();
+                    handleNoGeoLocation();
                 }
             }
         );
     } else {
-        $("#geolocation").hide();
-        $("#no-geolocation").show();
+        handleNoGeoLocation();
     }
 });
 
