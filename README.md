@@ -20,6 +20,8 @@ resources. To modify it you can use the [Camunda Modeler].
 
 ## Running the Example
 
+The code hast been developed and tested with java 1.8.0_181 and Apache Maven 3.3.3.
+
 You can create a executable Java jar file with:
 
 ```
@@ -90,7 +92,7 @@ Code coverage for tests can be viewed as a [JaCoCo report].
 ## Possible improvements
 
 - Download and extract the json file containing the cities when needed instead of saving it to the resources folder (determine if there is a newer version available using the ETag header).
-- Write a maven plugin to generate the Outfit Decider contract (Decision and Variables classes) from the DMN file.
+- Write a maven plugin using JCodeModel to generate the Outfit Decider contract (Decision and Variables classes) from the DMN file.
 - Define more complex decision logic, maybe based on humidity or pressure. 
 
 
