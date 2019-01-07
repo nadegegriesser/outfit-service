@@ -14,7 +14,7 @@ $(document).ready(function(){
                 });
                 $dropdown.val($("#cities option:first").val()).change();
             }).fail(function(jqxhr, textStatus, error) {
-                alert(textStatus + ':' + error);
+                alert(textStatus + ':' + jqxhr.responseText);
             });
         });
         $.getJSON("countries", function(countries){
@@ -24,14 +24,14 @@ $(document).ready(function(){
             });
             $dropdown.val($("#countries option:first").val()).change();
         }).fail(function(jqxhr, textStatus, error) {
-            alert(textStatus + ':' + error);
+            alert(textStatus + ':' + jqxhr.responseText);
         });
         $("form").submit(function(event) {
             $.getJSON("/cities/" + $("#cities option:selected").val() + "/recommendation", function(recommendation){
                 $("#temperature").text(recommendation['temperature']);
                 $("#outfit-level").text(recommendation['outfit-level']);
             }).fail(function(jqxhr, textStatus, error) {
-                alert(textStatus + ':' + error);
+                alert(textStatus + ':' + jqxhr.responseText);
             });
             event.preventDefault();
         });
@@ -47,7 +47,7 @@ $(document).ready(function(){
                     $("#temperature").text(recommendation['temperature']);
                     $("#outfit-level").text(recommendation['outfit-level']);
                 }).fail(function(jqxhr, textStatus, error) {
-                    alert(textStatus + ':' + error);
+                    alert(textStatus + ':' + jqxhr.responseText);
                 });
             },
             function (error) {
