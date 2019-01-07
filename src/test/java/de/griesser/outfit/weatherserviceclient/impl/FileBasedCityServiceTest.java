@@ -13,37 +13,48 @@ import static org.junit.Assert.assertNotNull;
 
 public class FileBasedCityServiceTest {
 
+    private static final String FILENOTFOUND_JSON = "filenotfound.json";
+    private static final String UNEXPECTEDCONTENT_JSON = "unexpectedcontent.json";
+    private static final String CITIES_1CONTINENT_JSON = "2cities_1continent.json";
+    private static final int EXPECTED_CITIES_SIZE = 2;
+    private static final int EXPECTED_FIRST_CITY_ID = 1859472;
+    private static final String EXPECTED_FIRST_CITY_NAME = "Kimiidera";
+    private static final String EXPECTED_FIRST_CITY_CC = "JP";
+    private static final int EXPECTED_SECOND_CITY_ID = 576721;
+    private static final String EXPECTED_SECOND_CITY_NAME = "Besedy";
+    private static final String EXPECTED_SECOND_CITY_CC = "RU";
+
     @Test(expected = IOException.class)
     public void testFileNotFound() throws IOException {
         ServiceProperties properties = new ServiceProperties();
-        properties.setCityFilename("filenotfound.json");
+        properties.setCityFilename(FILENOTFOUND_JSON);
         new FileBasedCityService(properties);
     }
 
     @Test(expected = IOException.class)
     public void testUnexpectedContent() throws IOException {
         ServiceProperties properties = new ServiceProperties();
-        properties.setCityFilename("unexpectedcontent.json");
+        properties.setCityFilename(UNEXPECTEDCONTENT_JSON);
         new FileBasedCityService(properties);
     }
 
     @Test
     public void testGetCities() throws IOException {
         ServiceProperties properties = new ServiceProperties();
-        properties.setCityFilename("2cities_1continent.json");
+        properties.setCityFilename(CITIES_1CONTINENT_JSON);
         CityService sut = new FileBasedCityService(properties);
 
         List<City> cities = sut.getCities();
 
         assertNotNull(cities);
-        assertEquals(2, cities.size());
+        assertEquals(EXPECTED_CITIES_SIZE, cities.size());
         City city = cities.get(0);
-        assertEquals(1859472, city.getId());
-        assertEquals("Kimiidera", city.getName());
-        assertEquals("JP", city.getCountry());
+        assertEquals(EXPECTED_FIRST_CITY_ID, city.getId());
+        assertEquals(EXPECTED_FIRST_CITY_NAME, city.getName());
+        assertEquals(EXPECTED_FIRST_CITY_CC, city.getCountry());
         city = cities.get(1);
-        assertEquals(576721, city.getId());
-        assertEquals("Besedy", city.getName());
-        assertEquals("RU", city.getCountry());
+        assertEquals(EXPECTED_SECOND_CITY_ID, city.getId());
+        assertEquals(EXPECTED_SECOND_CITY_NAME, city.getName());
+        assertEquals(EXPECTED_SECOND_CITY_CC, city.getCountry());
     }
 }
