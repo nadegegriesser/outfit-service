@@ -14,8 +14,8 @@ import static de.griesser.outfit.restservice.api.Examples.*;
 public interface RecommendationController {
 
     String ERROR_CITY_NOT_FOUND = "City Not Found";
-    String ERROR_SERVICE_UNAVAILABLE = "The weatherserviceclient is currently unavailable, please try again later.";
-    String ERROR_INTERNAL_SERVER_ERROR = "The weatherserviceclient is currently unavailable, our developers are taking care of it.";
+    String ERROR_SERVICE_UNAVAILABLE = "The service is currently unavailable, please try again later.";
+    String ERROR_INTERNAL_SERVER_ERROR = "The service is currently unavailable, our developers are taking care of it.";
 
     Recommendation getRecommendationByCityId(
             @ApiParam(value = "City Id (see city-contoller)", required = true, example = CITY_ID)
