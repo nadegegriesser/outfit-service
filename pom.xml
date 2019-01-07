@@ -12,7 +12,9 @@
     <artifactId>outfit-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Outfit Service</name>
-    <description>Service to provide outfit recommendation based on current weather</description>
+    <url>https://github.com/nadegegriesser/outfit-service</url>
+    <description>Service to provide outfit recommendation depending on the current temperature at a given location
+    </description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -27,6 +29,13 @@
         <url>https://github.com/nadegegriesser/outfit-service.git</url>
         <tag>HEAD</tag>
     </scm>
+
+    <developers>
+        <developer>
+            <name>Nadege Griesser</name>
+            <email>nadege.griesser@gmail.com</email>
+        </developer>
+    </developers>
 
     <dependencyManagement>
         <dependencies>
