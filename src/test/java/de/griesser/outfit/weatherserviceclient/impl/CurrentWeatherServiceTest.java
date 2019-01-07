@@ -28,20 +28,19 @@ public class CurrentWeatherServiceTest {
     private static final long UNKNOWN_CITY_ID = 1;
     private static final String UNITS = "imperial";
     private static final String APPID = "1a2b3c";
-    private static final String URI_TEMPLATE_UNKNOWN_CITY = "https://weather.com/weather?id=" +
+    private static final String URI_UNKNOWN_CITY = "https://weather.com/weather?id=" +
             UNKNOWN_CITY_ID
             + "&units=" +
             UNITS +
             "&APPID=" +
             APPID;
-
-    private static final String URI_TEMPLATE_CITY = "https://weather.com/weather?id=" +
+    private static final String URI_CITY = "https://weather.com/weather?id=" +
             CITY_ID
             + "&units=" +
             UNITS +
             "&APPID=" +
             APPID;
-    private static final String URI_TEMPLATE_COORDINATES = "https://weather.com/weather?lat=" +
+    private static final String URI_COORDINATES = "https://weather.com/weather?lat=" +
             LATITUDE
             + "&lon=" +
             LONGITUDE
@@ -68,7 +67,7 @@ public class CurrentWeatherServiceTest {
 
     @Test(expected = ClientError.class)
     public void testGetWeatherByCityIdCityNotFound() throws ClientError, ServerError, URISyntaxException {
-        when(restTemplate.getForObject(new URI(URI_TEMPLATE_UNKNOWN_CITY), Weather.class)).thenThrow(
+        when(restTemplate.getForObject(new URI(URI_UNKNOWN_CITY), Weather.class)).thenThrow(
                 HttpClientErrorException.create(NOT_FOUND,
                         "",
                         EMPTY,
@@ -80,7 +79,7 @@ public class CurrentWeatherServiceTest {
 
     @Test(expected = ServerError.class)
     public void testGetWeatherByCityIdInternatServerError() throws ClientError, ServerError, URISyntaxException {
-        when(restTemplate.getForObject(new URI(URI_TEMPLATE_CITY), Weather.class)).thenThrow(
+        when(restTemplate.getForObject(new URI(URI_CITY), Weather.class)).thenThrow(
                 HttpServerErrorException.create(INTERNAL_SERVER_ERROR,
                         "",
                         EMPTY,
@@ -92,18 +91,18 @@ public class CurrentWeatherServiceTest {
 
     @Test
     public void testGetWeatherByCityId() throws ClientError, ServerError, URISyntaxException {
-        when(restTemplate.getForObject(new URI(URI_TEMPLATE_CITY), Weather.class)).thenReturn(
+        when(restTemplate.getForObject(new URI(URI_CITY), Weather.class)).thenReturn(
                 DUMMY_WEATHER);
 
         Weather res = sut.getWeatherByCityId(Long.parseLong(CITY_ID));
 
         assertEquals(DUMMY_WEATHER, res);
-        verify(restTemplate, times(1)).getForObject(new URI(URI_TEMPLATE_CITY), Weather.class);
+        verify(restTemplate, times(1)).getForObject(new URI(URI_CITY), Weather.class);
     }
 
     @Test(expected = ClientError.class)
     public void testGetWeatherByCoordinatesTooManyRequests() throws ClientError, ServerError, URISyntaxException {
-        when(restTemplate.getForObject(new URI(URI_TEMPLATE_COORDINATES), Weather.class)).thenThrow(
+        when(restTemplate.getForObject(new URI(URI_COORDINATES), Weather.class)).thenThrow(
                 HttpClientErrorException.create(TOO_MANY_REQUESTS,
                         "",
                         EMPTY,
@@ -115,7 +114,7 @@ public class CurrentWeatherServiceTest {
 
     @Test(expected = ServerError.class)
     public void testGetWeatherByCoordinatesInternalServerError() throws ClientError, ServerError, URISyntaxException {
-        when(restTemplate.getForObject(new URI(URI_TEMPLATE_COORDINATES), Weather.class)).thenThrow(
+        when(restTemplate.getForObject(new URI(URI_COORDINATES), Weather.class)).thenThrow(
                 HttpServerErrorException.create(INTERNAL_SERVER_ERROR,
                         "",
                         EMPTY,
@@ -127,13 +126,13 @@ public class CurrentWeatherServiceTest {
 
     @Test
     public void testGetWeatherByCoordinates() throws ClientError, ServerError, URISyntaxException {
-        when(restTemplate.getForObject(new URI(URI_TEMPLATE_COORDINATES), Weather.class)).thenReturn(
+        when(restTemplate.getForObject(new URI(URI_COORDINATES), Weather.class)).thenReturn(
                 DUMMY_WEATHER);
 
         Weather res = sut.getWeatherByCoordinates(new Coord(new BigDecimal(LATITUDE), new BigDecimal(LONGITUDE)));
 
         assertEquals(DUMMY_WEATHER, res);
-        verify(restTemplate, times(1)).getForObject(new URI(URI_TEMPLATE_COORDINATES), Weather.class);
+        verify(restTemplate, times(1)).getForObject(new URI(URI_COORDINATES), Weather.class);
     }
 
 }

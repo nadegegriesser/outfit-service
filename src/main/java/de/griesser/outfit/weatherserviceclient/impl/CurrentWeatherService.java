@@ -17,7 +17,7 @@ public class CurrentWeatherService implements WeatherService {
     static final String CACHE_NAME_CITY = "current-weather-city";
     private static final String CURRENT_WEATHER_BY_CITY_ID =
             "/weather?id={id}&units={units}&APPID={key}";
-    private static final String CACHE_NAME_COORDINATES = "current-weather-coordinates";
+    static final String CACHE_NAME_COORDINATES = "current-weather-coordinates";
     private static final String CURRENT_WEATHER_BY_COORDINATES =
             "/weather?lat={lat}&lon={lon}&units={units}&APPID={key}";
 
