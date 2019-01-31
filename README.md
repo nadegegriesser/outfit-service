@@ -71,7 +71,7 @@ You can visualize and interact with the API’s resources using [Swagger UI].
 
 ## Reports
 
-Repots are available after running:
+Reports are available after running:
 ```
 mvn site
 ```
