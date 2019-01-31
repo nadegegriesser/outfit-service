@@ -1,5 +1,6 @@
 /target/
 .mvn/
+*.odp#
 
 ### STS ###
 .apt_generated
