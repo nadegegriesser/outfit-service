@@ -51,10 +51,9 @@ $(document).ready(function(){
                 });
             },
             function (error) {
-                if (error.code == error.PERMISSION_DENIED) {
-                    handleNoGeoLocation();
-                }
-            }
+                handleNoGeoLocation();
+            },
+            {timeout:5000}
         );
     } else {
         handleNoGeoLocation();
