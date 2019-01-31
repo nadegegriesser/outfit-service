@@ -5,7 +5,7 @@ import de.griesser.outfit.weatherserviceclient.config.ServiceProperties;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriTemplate;
 
@@ -40,10 +40,10 @@ public class CurrentWeatherService implements WeatherService {
         try {
             URI uri = new UriTemplate(uriTemplateByCity).expand(cityId, units, apiKey);
             return restTemplate.getForObject(uri, Weather.class);
-        } catch (HttpServerErrorException ex) {
-            throw new ServerError();
         } catch (HttpClientErrorException ex) {
             throw new ClientError();
+        } catch (RestClientException ex) {
+            throw new ServerError();
         }
     }
 
@@ -52,10 +52,10 @@ public class CurrentWeatherService implements WeatherService {
         try {
             URI uri = new UriTemplate(uriTemplateByCoordinates).expand(coord.getLat(), coord.getLon(), units, apiKey);
             return restTemplate.getForObject(uri, Weather.class);
-        } catch (HttpServerErrorException ex) {
-            throw new ServerError();
         } catch (HttpClientErrorException ex) {
             throw new ClientError();
+        } catch (RestClientException ex) {
+            throw new ServerError();
         }
     }
 
